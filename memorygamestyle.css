@@ -1,0 +1,61 @@
+body {
+  background: grey;
+  color: white;
+}
+.block {
+  padding: 5%;
+  background: black;
+  float: left;
+  margin: 5%;
+  width: 80%;
+}
+.startMenu {
+  width: 30%;
+  background: white;
+  color: grey;
+  margin: 5%;
+  float: left;
+  padding: 5%;
+}
+@media only screen and (max-width: 450px) {
+  .startMenu {
+    width: 80%;
+    }
+}
+.piece{
+  width: 7.5%;
+  background: white;
+  color: grey;
+  margin: 2.5%;
+  float: left;
+  padding: 0%;
+  padding-top: 7.5%; /*usado para manter o aspect radio 1:1*/
+}
+.pieceClicked{
+  width: 7.5%;
+  background: grey;
+  color: grey;
+  margin: 2.5%;
+  float: left;
+  padding: 0%;
+  padding-top: 7.5%; /*usado para manter o aspect radio 1:1*/
+}
+@media only screen and (max-width: 700px) {
+  .piece {
+    width: 20%;
+    padding-top: 15%;
+    }
+}
+@media only screen and (max-width: 450px) {
+  .piece {
+    width: 45%;
+    padding-top: 45%;
+    }
+}
+.play{
+  background:green;
+  width: 80%;
+  margin:5%;
+  padding:5%;
+  float: left;
+}

@@ -1,14 +1,15 @@
-//as pecas ainda podem se repetir na array, corrigir isso
 createFirstPage()
 let typeOfPieces = ["Fruits","Colors","Animals","Places","All Pieces"]
 let wordsOrImagesGame, numberOfPieces, allGamePieces, inGamePieces, challengeOrCasual, challengeLevel, pieceOneId, pieceTwoId, pieceOne, pieceTwo
 let switchOne = false
 let switchTwo = false
+let countToWin = 0
 
 function changeBoard(boardContent){
 	document.getElementById("board").innerHTML = boardContent
 }
 function createFirstPage(){
+	//countToWin = 0
 	boardContent = `<div class="startMenu" onclick="getChallengeOrCasual('challenge')">Challenge Game</div>`+`<div class="startMenu" onclick="getChallengeOrCasual('casual')">Casual Game</div>`
 	changeBoard(boardContent)
 }
@@ -52,7 +53,7 @@ function generateGamePieces(elem){
   } else if (elem == "Places"){
   	allGamePieces = ["Paris", "London", "Brussels", "Amsterdan", "Rio de Janeiro", "Madrid", "Lisboa", "Oslo", "Vilnius", "Warsaw", "Saint Petersburg", "Buenos Aires", "New York", "Dublin", "Venice"]
   } else if (elem == "All Pieces"){
-  	allGamePieces = ["Paris", "London", "Brussels", "Amsterdan", "Rio de Janeiro", "Madrid", "Lisboa", "Oslo", "Vilnius", "Warsaw", "Saint Petersburg", "Buenos Aires", "New York", "Dublin", "Venice"] + ["Shark", "Blue Whale", "Ape", "Canary", "Chicken", "Turkey", "Gorila", "Dog", "Cat", "Rabbit", "Mouse", "Ant", "Pig", "Cow", "Salmon"] + ["Red", "Blue", "Black", "White", "Green", "Purple", "Yellow", "Cyan", "Magenta", "Pink", "Beije", "Grey", "Brown", "Orange", "Eggshell"] + ["Apple", "Banana", "Cherry", "Mango", "Orange", "Avocado", "Peach", "Plum", "Blueberry", "Strawberry", "Grape", "Lemon", "Lime", "Kiwi", "Pineapple"]
+  	allGamePieces = ["Paris", "London", "Brussels", "Amsterdan", "Rio de Janeiro", "Madrid", "Lisboa", "Oslo", "Vilnius", "Warsaw", "Saint Petersburg", "Buenos Aires", "New York", "Dublin", "Venice", "Shark", "Blue Whale", "Ape", "Canary", "Chicken", "Turkey", "Gorila", "Dog", "Cat", "Rabbit", "Mouse", "Ant", "Pig", "Cow", "Salmon", "Red", "Blue", "Black", "White", "Green", "Purple", "Yellow", "Cyan", "Magenta", "Pink", "Beije", "Grey", "Brown", "Orange", "Eggshell", "Apple", "Banana", "Cherry", "Mango", "Orange", "Avocado", "Peach", "Plum", "Blueberry", "Strawberry", "Grape", "Lemon", "Lime", "Kiwi", "Pineapple"]
   }
   startRound()
 }
@@ -76,12 +77,9 @@ function shufflePieces(elem){
 function getInGamePieces(){
 	inGamePieces = []
 	for (i=0 ; i < numberOfPieces/2;){
-  	let tempPosition = Math.floor(Math.random()*allGamePieces.length)
-    	if (!(allGamePieces[tempPosition] in inGamePieces)){
-      inGamePieces.push(allGamePieces[tempPosition], allGamePieces[tempPosition])
+  	inGamePieces.push(allGamePieces[i], allGamePieces[i])
         i++
-      }
-  }
+   }
 }
 function generateBoard(){
 	boardContent = ""
@@ -92,8 +90,10 @@ function generateBoard(){
 }
 function restartGame(){
 	createFirstPage()
+  countToWin = 0
 }
 function clickOnPiece(elem){
+	if (switchTwo == false){
 	let temporaryElement = document.getElementById("piece"+elem)
   if (temporaryElement.getAttribute("is-it-clicked")=="false"){
   	temporaryElement.className = "pieceClicked"
@@ -103,22 +103,38 @@ function clickOnPiece(elem){
       switchOne = true
       temporaryElement.setAttribute("is-it-clicked","true")
     } else {
+    	switchTwo = true
     	pieceTwo = temporaryElement.getAttribute("piece-value")
       temporaryElement.setAttribute("is-it-clicked","true")
       pieceTwoId = "piece"+elem
-    	comparePieces()
-    }
+      switchOne = false
+    	setTimeout(() => {comparePieces()}, 1000);
+      }
+  }
   }
 }
 function comparePieces(){
 	if (pieceOne == pieceTwo){
-  alert("acertoumiseravi")
+  countToWin += 1
+  	if (countToWin == numberOfPieces/2){
+    	endGame()
+    }
   } else {
-  alert("erroumiseravi")
   document.getElementById(pieceOneId).className = "piece"
   document.getElementById(pieceTwoId).className = "piece"
   document.getElementById(pieceOneId).setAttribute("is-it-clicked","false")
   document.getElementById(pieceTwoId).setAttribute("is-it-clicked","false")
   }
-  switchOne = false
+  switchTwo = false
+}
+function endGame(){
+	boardContent = `<h2>You Won!</h2>`
+  if (challengeOrCasual == "challenge"){
+  	numberOfPieces += 2
+    countToWin = 0
+  	boardContent += `<div class="nextLevel" onclick="startRound()">Next Level</div>`
+  } else {
+  	boardContent += `<div onclick="restartGame()" class="nextLevel">Play Again</div>`
+  }
+	changeBoard(boardContent)
 }

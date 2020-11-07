@@ -1,3 +1,7 @@
+h2 {
+  text-align: center;
+  color: white;
+}
 body {
   background: grey;
   color: white;
@@ -6,16 +10,38 @@ body {
   padding: 5%;
   background: black;
   float: left;
-  margin: 5%;
+  margin: 1% 5% 0% 5%;
   width: 80%;
 }
+.restartMenu{
+  background: black;
+  color: white;
+  float: right;
+  padding: 3px;
+  margin: 0% 5% 0% 5%;
+  
+}
+.nextLevel {
+  width: 80%;
+  background: white;
+  color: grey;
+  margin: 5% 5% 5% 5%;
+  float: left;
+  position: relative;
+  padding: 5%;
+  text-align: center;
+  }
 .startMenu {
   width: 30%;
   background: white;
   color: grey;
-  margin: 5%;
+  margin: 5% 5% 5% 5%;
   float: left;
+  position: relative;
   padding: 5%;
+  text-align: center;
+  
+  
 }
 @media only screen and (max-width: 450px) {
   .startMenu {
